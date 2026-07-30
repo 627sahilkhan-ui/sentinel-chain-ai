@@ -35,7 +35,7 @@ const title = "Security overview — SentinelChain AI";
 const description =
   "Repository coverage, SBOM inventory, critical CVEs, risk score trend, and remediation pull requests in one console.";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title },

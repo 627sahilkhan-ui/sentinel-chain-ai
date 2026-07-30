@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Bell,
   FileCheck2,
@@ -11,10 +13,21 @@ import {
   Settings,
   ShieldAlert,
   ShieldCheck,
+  LogOut,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
+import { useSession } from "@/hooks/use-session";
 
 const nav = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard" },
@@ -28,6 +41,39 @@ const nav = [
 
 export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { user } = useSession();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [profile, setProfile] = useState<{
+    display_name: string | null;
+    avatar_url: string | null;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    supabase
+      .from("profiles")
+      .select("display_name, avatar_url")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (active) setProfile(data ?? null);
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  const name = profile?.display_name ?? user?.email ?? "Account";
+  const initials = name.slice(0, 2).toUpperCase();
+
+  async function handleSignOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -74,9 +120,31 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <Button variant="ghost" size="icon" aria-label="Notifications">
               <Bell className="size-4" />
             </Button>
-            <Avatar className="size-8">
-              <AvatarFallback className="text-xs">SC</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button type="button" aria-label="Account menu" className="rounded-full">
+                  <Avatar className="size-8">
+                    {profile?.avatar_url ? (
+                      <AvatarImage src={profile.avatar_url} alt={name} />
+                    ) : null}
+                    <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="truncate font-normal">
+                  <span className="block text-sm font-medium">{name}</span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {user?.email}
+                  </span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={handleSignOut}>
+                  <LogOut className="size-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
         <main className="flex-1 p-6">{children}</main>
