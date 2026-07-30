@@ -120,9 +120,31 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <Button variant="ghost" size="icon" aria-label="Notifications">
               <Bell className="size-4" />
             </Button>
-            <Avatar className="size-8">
-              <AvatarFallback className="text-xs">SC</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button type="button" aria-label="Account menu" className="rounded-full">
+                  <Avatar className="size-8">
+                    {profile?.avatar_url ? (
+                      <AvatarImage src={profile.avatar_url} alt={name} />
+                    ) : null}
+                    <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="truncate font-normal">
+                  <span className="block text-sm font-medium">{name}</span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {user?.email}
+                  </span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={handleSignOut}>
+                  <LogOut className="size-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
         <main className="flex-1 p-6">{children}</main>
