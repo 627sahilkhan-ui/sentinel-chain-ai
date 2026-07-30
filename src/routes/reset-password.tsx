@@ -45,8 +45,9 @@ function ResetPasswordPage() {
   }
 
   return (
-    <main className="grid-backdrop flex min-h-screen items-center justify-center bg-background px-4 py-12">
-      <div className="w-full max-w-md">
+    <main className="relative flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      <div className="grid-backdrop pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="relative w-full max-w-md">
         <div className="mb-8 flex items-center justify-center gap-2">
           <span className="bg-brand flex size-8 items-center justify-center rounded-lg">
             <ShieldCheck className="size-4 text-primary-foreground" />
