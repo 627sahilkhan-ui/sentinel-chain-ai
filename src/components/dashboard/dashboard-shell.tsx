@@ -31,14 +31,10 @@ import { useSession } from "@/hooks/use-session";
 
 const nav = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard" },
-  { label: "Driver Panel", icon: Package, to: "/dashboard/driver" },
-  { label: "Customer Panel", icon: FileCheck2, to: "/dashboard/customer" },
-  { label: "Repositories", icon: Package },
-  { label: "Vulnerabilities", icon: ShieldAlert },
-  { label: "Blast radius", icon: Network },
-  { label: "Pull requests", icon: GitPullRequest },
-  { label: "Admin Panel", icon: Settings, to: "/admin" },
-  { label: "Settings", icon: Settings },
+  { label: "Repositories", icon: Package, to: "/repositories" },
+  { label: "SBOM & provenance", icon: FileCheck2, to: "/sboms" },
+  { label: "Vulnerabilities", icon: ShieldAlert, to: "/vulnerabilities" },
+  { label: "Remediations", icon: GitPullRequest, to: "/remediations" },
 ];
 
 export function DashboardShell({ children }: { children: ReactNode }) {

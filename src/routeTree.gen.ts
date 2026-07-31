@@ -13,12 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AuthDriverRouteImport } from './routes/auth.driver'
-import { Route as AuthCustomerRouteImport } from './routes/auth.customer'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedDashboardDriverRouteImport } from './routes/_authenticated/dashboard.driver'
-import { Route as AuthenticatedDashboardCustomerRouteImport } from './routes/_authenticated/dashboard.customer'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedRemediationsRouteImport } from './routes/_authenticated/remediations'
+import { Route as AuthenticatedRepositoriesRouteImport } from './routes/_authenticated/repositories'
+import { Route as AuthenticatedSbomsRouteImport } from './routes/_authenticated/sboms'
+import { Route as AuthenticatedVulnerabilitiesRouteImport } from './routes/_authenticated/vulnerabilities'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,97 +38,105 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthDriverRoute = AuthDriverRouteImport.update({
-  id: '/auth/driver',
-  path: '/auth/driver',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthCustomerRoute = AuthCustomerRouteImport.update({
-  id: '/auth/customer',
-  path: '/auth/customer',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDashboardDriverRoute = AuthenticatedDashboardDriverRouteImport.update({
-  id: '/dashboard/driver',
-  path: '/dashboard/driver',
+const AuthenticatedRemediationsRoute =
+  AuthenticatedRemediationsRouteImport.update({
+    id: '/remediations',
+    path: '/remediations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRepositoriesRoute =
+  AuthenticatedRepositoriesRouteImport.update({
+    id: '/repositories',
+    path: '/repositories',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSbomsRoute = AuthenticatedSbomsRouteImport.update({
+  id: '/sboms',
+  path: '/sboms',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDashboardCustomerRoute = AuthenticatedDashboardCustomerRouteImport.update({
-  id: '/dashboard/customer',
-  path: '/dashboard/customer',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedVulnerabilitiesRoute =
+  AuthenticatedVulnerabilitiesRouteImport.update({
+    id: '/vulnerabilities',
+    path: '/vulnerabilities',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/auth/driver': typeof AuthDriverRoute
-  '/auth/customer': typeof AuthCustomerRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/dashboard/driver': typeof AuthenticatedDashboardDriverRoute
-  '/dashboard/customer': typeof AuthenticatedDashboardCustomerRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/remediations': typeof AuthenticatedRemediationsRoute
+  '/repositories': typeof AuthenticatedRepositoriesRoute
+  '/sboms': typeof AuthenticatedSbomsRoute
+  '/vulnerabilities': typeof AuthenticatedVulnerabilitiesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/auth/driver': typeof AuthDriverRoute
-  '/auth/customer': typeof AuthCustomerRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/dashboard/driver': typeof AuthenticatedDashboardDriverRoute
-  '/dashboard/customer': typeof AuthenticatedDashboardCustomerRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/remediations': typeof AuthenticatedRemediationsRoute
+  '/repositories': typeof AuthenticatedRepositoriesRoute
+  '/sboms': typeof AuthenticatedSbomsRoute
+  '/vulnerabilities': typeof AuthenticatedVulnerabilitiesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/auth/driver': typeof AuthDriverRoute
-  '/auth/customer': typeof AuthCustomerRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/dashboard/driver': typeof AuthenticatedDashboardDriverRoute
-  '/_authenticated/dashboard/customer': typeof AuthenticatedDashboardCustomerRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/remediations': typeof AuthenticatedRemediationsRoute
+  '/_authenticated/repositories': typeof AuthenticatedRepositoriesRoute
+  '/_authenticated/sboms': typeof AuthenticatedSbomsRoute
+  '/_authenticated/vulnerabilities': typeof AuthenticatedVulnerabilitiesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/auth/driver' | '/auth/customer' | '/reset-password' | '/dashboard' | '/dashboard/driver' | '/dashboard/customer' | '/admin'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/dashboard'
+    | '/remediations'
+    | '/repositories'
+    | '/sboms'
+    | '/vulnerabilities'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/auth/driver' | '/auth/customer' | '/reset-password' | '/dashboard' | '/dashboard/driver' | '/dashboard/customer' | '/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/dashboard'
+    | '/remediations'
+    | '/repositories'
+    | '/sboms'
+    | '/vulnerabilities'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
-    | '/auth/driver'
-    | '/auth/customer'
     | '/reset-password'
     | '/_authenticated/dashboard'
-    | '/_authenticated/dashboard/driver'
-    | '/_authenticated/dashboard/customer'
-    | '/_authenticated/admin'
+    | '/_authenticated/remediations'
+    | '/_authenticated/repositories'
+    | '/_authenticated/sboms'
+    | '/_authenticated/vulnerabilities'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  AuthDriverRoute: typeof AuthDriverRoute
-  AuthCustomerRoute: typeof AuthCustomerRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
@@ -156,20 +163,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/driver': {
-      id: '/auth/driver'
-      path: '/auth/driver'
-      fullPath: '/auth/driver'
-      preLoaderRoute: typeof AuthDriverRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/customer': {
-      id: '/auth/customer'
-      path: '/auth/customer'
-      fullPath: '/auth/customer'
-      preLoaderRoute: typeof AuthCustomerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -184,25 +177,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/dashboard/driver': {
-      id: '/_authenticated/dashboard/driver'
-      path: '/dashboard/driver'
-      fullPath: '/dashboard/driver'
-      preLoaderRoute: typeof AuthenticatedDashboardDriverRouteImport
+    '/_authenticated/remediations': {
+      id: '/_authenticated/remediations'
+      path: '/remediations'
+      fullPath: '/remediations'
+      preLoaderRoute: typeof AuthenticatedRemediationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/dashboard/customer': {
-      id: '/_authenticated/dashboard/customer'
-      path: '/dashboard/customer'
-      fullPath: '/dashboard/customer'
-      preLoaderRoute: typeof AuthenticatedDashboardCustomerRouteImport
+    '/_authenticated/repositories': {
+      id: '/_authenticated/repositories'
+      path: '/repositories'
+      fullPath: '/repositories'
+      preLoaderRoute: typeof AuthenticatedRepositoriesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/sboms': {
+      id: '/_authenticated/sboms'
+      path: '/sboms'
+      fullPath: '/sboms'
+      preLoaderRoute: typeof AuthenticatedSbomsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/vulnerabilities': {
+      id: '/_authenticated/vulnerabilities'
+      path: '/vulnerabilities'
+      fullPath: '/vulnerabilities'
+      preLoaderRoute: typeof AuthenticatedVulnerabilitiesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -210,16 +210,18 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedDashboardDriverRoute: typeof AuthenticatedDashboardDriverRoute
-  AuthenticatedDashboardCustomerRoute: typeof AuthenticatedDashboardCustomerRoute
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedRemediationsRoute: typeof AuthenticatedRemediationsRoute
+  AuthenticatedRepositoriesRoute: typeof AuthenticatedRepositoriesRoute
+  AuthenticatedSbomsRoute: typeof AuthenticatedSbomsRoute
+  AuthenticatedVulnerabilitiesRoute: typeof AuthenticatedVulnerabilitiesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedDashboardDriverRoute: AuthenticatedDashboardDriverRoute,
-  AuthenticatedDashboardCustomerRoute: AuthenticatedDashboardCustomerRoute,
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedRemediationsRoute: AuthenticatedRemediationsRoute,
+  AuthenticatedRepositoriesRoute: AuthenticatedRepositoriesRoute,
+  AuthenticatedSbomsRoute: AuthenticatedSbomsRoute,
+  AuthenticatedVulnerabilitiesRoute: AuthenticatedVulnerabilitiesRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -229,20 +231,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  AuthDriverRoute: AuthDriverRoute,
-  AuthCustomerRoute: AuthCustomerRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
