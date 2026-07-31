@@ -7,10 +7,8 @@ import {
   FileCheck2,
   GitPullRequest,
   LayoutDashboard,
-  Network,
   Package,
   Search,
-  Settings,
   ShieldAlert,
   ShieldCheck,
   LogOut,
@@ -104,7 +102,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="border-t border-border/70 p-4 text-xs text-muted-foreground">
-          Phase 1 shell · data wiring next
+          Supply-chain console · live data
         </div>
       </aside>
 
